@@ -12,8 +12,7 @@ def shop_trip() -> None:
 
     fuel_price = config["FUEL_PRICE"]
     shops = [
-        Shop(shop["name"],
-             shop["location"], shop["products"])
+        Shop(shop["name"], shop["location"], shop["products"])
         for shop in config["shops"]
     ]
     customers = [Customer(person) for person in config["customers"]]
@@ -21,26 +20,28 @@ def shop_trip() -> None:
     for person in customers:
         print(f"{person.name} has {person.money} dollars")
         costs = person.calculate_total_costs(shops, fuel_price)
+
         cheapest_shop = None
         min_cost = float("inf")
+
         for shop, cost in costs:
-            print(f"{person.name}'s trip to the "
-                  f"{shop.name} costs {cost}".rstrip("0").rstrip("."))
+            print(f"{person.name}'s trip to the {shop.name} costs {cost}")
             if cost < min_cost:
                 min_cost = cost
                 cheapest_shop = shop
 
         if person.money >= min_cost:
             print(f"{person.name} rides to {cheapest_shop.name}")
+            person.go_to(cheapest_shop.location)
             cheapest_shop.print_receipt(person.name, person.product_cart)
             print(f"\n{person.name} rides home")
-            person.money = person.money - min_cost
-            print(f"{person.name} now has "
-                  f"{person.money} dollars\n".rstrip("0").rstrip("."))
+            person.return_home()
+            person.money = round(person.money - min_cost, 2)
+            print(f"{person.name} now has {person.money} dollars\n")
         else:
             print(
                 f"{person.name} doesn't have enough money "
-                f"to make a purchase in any shop"
+                "to make a purchase in any shop"
             )
 
 
