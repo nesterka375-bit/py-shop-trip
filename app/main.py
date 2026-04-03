@@ -25,7 +25,8 @@ def shop_trip() -> None:
         min_cost = float("inf")
 
         for shop, cost in costs:
-            print(f"{person.name}'s trip to the {shop.name} costs {cost}")
+            f_cost = f"{cost: g}".replace(" ", "")
+            print(f"{person.name}'s trip to the {shop.name} costs {f_cost}")
             if cost < min_cost:
                 min_cost = cost
                 cheapest_shop = shop
@@ -33,11 +34,15 @@ def shop_trip() -> None:
         if person.money >= min_cost:
             print(f"{person.name} rides to {cheapest_shop.name}")
             person.go_to(cheapest_shop.location)
+
             cheapest_shop.print_receipt(person.name, person.product_cart)
+
             print(f"\n{person.name} rides home")
             person.return_home()
+
             person.money = round(person.money - min_cost, 2)
-            print(f"{person.name} now has {person.money} dollars\n")
+            f_money = f"{person.money: g}".replace(" ", "")
+            print(f"{person.name} now has {f_money} dollars\n")
         else:
             print(
                 f"{person.name} doesn't have enough money "

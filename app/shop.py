@@ -22,9 +22,9 @@ class Shop:
         for product, quantity in products.items():
             cost = self.products[product] * quantity
             total += cost
-            line = f"{quantity} {product}s for {cost: g} dollars"
-            print(line.replace("  ", " "))
+            f_cost = f"{cost: g}".replace(" ", "")
+            print(f"{quantity} {product}s for {f_cost} dollars")
 
-        total_line = f"Total cost is {total: g} dollars"
-        print(total_line.replace("  ", " "))
+        f_total = f"{total: g}".replace(" ", "")
+        print(f"Total cost is {f_total} dollars")
         print("See you again!")
